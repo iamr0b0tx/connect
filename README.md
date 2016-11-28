@@ -1,0 +1,2 @@
+# connect
+wireless adhoc
