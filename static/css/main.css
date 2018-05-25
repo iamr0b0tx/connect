@@ -1,0 +1,18 @@
+.container{
+	width:100%;
+}
+
+.container input[type=text]{
+	height:35px;
+	width:88%;
+	padding: 1%;
+}
+
+
+.container button{
+	height:auto;
+	width:7%;
+	padding: 1%;
+	margin: 1%;
+	vertical-align: middle;
+}
