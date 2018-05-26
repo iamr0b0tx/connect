@@ -10,10 +10,23 @@
 		<div class="container">
 			<input type="text" name="uri"  value="http://192.168.137.132:33455/web/srcimg/img_home_phone.png" placeholder="Enter Url here!" id="uri" /><button onclick="go()">Go</button>
 			
+			<div class="sidebar">
+				<h1>Clients</h1>
+
+				<ul id="clients_list">
+					<li>client</li>
+					<li>clikent</li>
+					<li>client</li>
+				</ul>
+
+				<button id="reload_clients_list" onclick="reloadClientsList()">Refresh list</button>
+			</div>
 			<script type="text/javascript">
 				
 				var viewer = document.getElementById("viewer");
 				var uri = document.getElementById("uri");
+				var clients_list = document.getElementById("clients_list");
+				var reload_clients_list = document.getElementById("reload_clients_list");
 
 			</script>
 		</div>

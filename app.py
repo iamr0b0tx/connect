@@ -3,21 +3,23 @@ from subprocess import check_output
 from urllib.parse import urlsplit
 
 
-import re, os
+import re, os, json
 import urllib.request
 import mimetypes
 
 clients = check_output("arp -a", shell=True).decode()
 client_ips = re.findall( r'[0-9]+(?:\.[0-9]+){3}', clients)
 clients = client_ips.copy()
-# for client in client_ips:
-# 	try:
-# 		print(client)
-# 		val = urlopen(client)
-# 		print(val)
-# 		clients.append(client)
-# 	except:
-# 		pass
+actualclients = {}
+for client in clients:
+	try:
+		print(client)
+		val = urlopen(client+"/info")
+		print(val)
+		val = json.loads(val)
+		actualclients.setdefault(client, val)
+	except:
+		pass
 
 print(clients)
 def open_uri(url):
@@ -57,6 +59,17 @@ app = Flask(__name__, static_url_path="", static_folder="static/")
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/info')
+def getInfo():
+	myinfo = {'name':'christian'}
+	myinfo = json.dumps(myinfo)
+	return myinfo
+
+@app.route('/clients')
+def getClients():
+	clients_info = json.dumps(actualclients)
+	return clients_info
 
 @app.route('/goto', methods=['GET'])
 def reroute():
