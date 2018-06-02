@@ -8,7 +8,7 @@ def getActualClients(clients):
 	actualclients = {}
 	for client in clients:
 		try:
-			url = "{}:{}/info".format(prepareUrl(client), str(PORT))
+			url = bindUrl(client)+"/info"
 			val = urllib.request.urlopen(url)
 			val = val.read().decode()
 			val = json.loads(val)
@@ -19,12 +19,17 @@ def getActualClients(clients):
 
 	return actualclients
 
+def bindUrl(url):
+	return "{}:{}".format(prepareUrl(url), str(PORT))
+
 def open_uri(url):
 	data = None
-	url = prepareUrl(url)
 	print('visiting \'{}\''.format(url))
 	try:
 		data =  urllib.request.urlopen(url)
+		data = data.read()
+		if data.decode() == "[looping]":
+			data = None
 
 	except:
 		pass
