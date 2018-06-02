@@ -24,7 +24,6 @@ app = Flask(__name__, static_url_path="", static_folder="static/")
 
 @app.route('/')
 def index():
-	print(request.environ['SERVER_NAME'])
 	return render_template('index.html')
 
 @app.route('/info')
@@ -42,7 +41,7 @@ def reroute():
 	basepath = ""
 	content = None
 
-	extended = prepareUrl(request.args["extended"])
+	extended = request.args["extended"]
 	print("ex", extended)
 
 	goto_url = prepareUrl(request.args["url"])
@@ -70,17 +69,14 @@ def reroute():
 		else:
 			print("checking if clients can route url resolve")
 			for client in clients:
-				content =  "{}/goto?url={}&extended={}".format(open_uri(bindUrl(client), goto_url, myinfo["name"]))
+				content =  open_uri("{}/goto?url={}&extended=[{}]".format(bindUrl(client), goto_url, myinfo["name"]))
 				if content != None:
 					print("url request resolved by client = {}".format(client))
 					break
 
 	if content != None:
 		data = content
-		if extended != myinfo["name"]:
-			return data
-
-		else:
+		if extended != myinfo["name"] or extended == "[0]":
 			if basename.strip() == "":
 				basename = 'tempfile'+extension
 			basepath = "/temp/"+basename
@@ -88,6 +84,9 @@ def reroute():
 			saveFile("static"+basepath, data)
 			print("basepath = {}".format(basepath))
 			return basepath
+
+		else:
+			return data
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

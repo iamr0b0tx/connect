@@ -6,7 +6,7 @@ function sendReq(url) {
 			location.href = location.origin+data;
 		}
 	};
-	xhttp.open("GET", "goto?url="+url+"&extended={0}", true);
+	xhttp.open("GET", "goto?url="+url+"&extended=[0]", true);
 	xhttp.send();
 }
 
