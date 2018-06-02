@@ -14,13 +14,14 @@ actualclients = {}
 for client in clients:
 	try:
 		print(client)
-		val = urlopen(client+"/info")
+		val = urllib.request.urlopen(client+":5000/info")
+		val = val.read().decode()
 		print(val)
 		val = json.loads(val)
 		actualclients.setdefault(client, val)
 	except:
 		pass
-
+`
 print(clients)
 def open_uri(url):
 	data = None
@@ -62,7 +63,7 @@ def index():
 
 @app.route('/info')
 def getInfo():
-	myinfo = {'name':'christian'}
+	myinfo = {'name':'cipherx'}
 	myinfo = json.dumps(myinfo)
 	return myinfo
 
