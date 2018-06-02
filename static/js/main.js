@@ -40,3 +40,5 @@ function reloadClientsList(){
 	xhttp.open("GET", "/clients", true);
 	xhttp.send();
 }
+
+reloadClientsList();
